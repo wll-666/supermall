@@ -1,0 +1,33 @@
+###1 防抖操作
+假设用户在 input 中输入字符，用户输入时间超过 100ms，再发送网络请求，避免服务器压力过大
+- 对于 scroll.refresh() 非常频繁的问题，进行防抖操作
+
+```
+    /**
+     * 防抖函数 , 防抖函数只执行一次，后面执行的都是其返回的函数
+     */
+    deBounce(func, delay) {
+      let timer = null; //该timer只会执行一次
+
+      return function(...args) {
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => {
+          func.apply(this, args);
+        }, delay);
+      };
+    },
+```
+###2 fastClick减少300ms延迟（移动端）
+2.1 安装
+npm install fastClick --save -dev
+2.2 导入（在入口文件main.js）
+2.3 使用，调用attach函数
+fastClick.attach(document.body)
+
+###3 图片懒加载
+即在图片需要显示在界面上时再去加载
+3.1 安装插件 
+npm install vue-lazyload --save -dev
+3.2 导入（在入口文件中导入）
+3.3 直接使用
+在Img标签的':src' 改写为'v-lazy="图片路径'

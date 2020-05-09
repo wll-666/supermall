@@ -1,0 +1,61 @@
+### 1，better-scroll 比原生的滚动条更好，可以解决手机端轮播图无法滑动的问题
+### 2，安装（2.x 版本）
+
+- npm install @better-scroll/core@next --save
+- yarn add @better-scroll/core@next
+
+### 2.1引入
+
+```
+**ES6语法引入：
+  import BScroll from '@better-scroll/core'
+
+**Commonjs语法引入：
+  var BScroll = require('@better-scroll/scroll')
+```
+
+### 2.3使用（script 方面）
+
+```
+**三种引入方式**
+//1. 基础滚动
+  import BScroll from '@better-scroll/core'
+  let bs = new BScroll('.wrapper', {
+    // ...... 详见配置项
+  })
+
+//2. 增强型滚动 (根据需求引入插件)
+  import BScroll from '@better-scroll/core'
+  import Pullup from '@better-scroll/pull-up'
+
+  // 注册插件
+  BScroll.use(Pullup)
+
+  let bs = new BScroll('.wrapper', {
+    probeType: 3,
+    pullUpLoad: true
+  })
+
+//3. 全能力滚动
+  import BScroll from 'better-scroll' //(一个拥有全部插件能力的 BetterScroll 包,但是体积会相对大很多，推荐按需引入)
+  let bs = new BScroll('.wrapper', {
+    // ...直接配置插件
+    pullUpLoad: true,
+    wheel: true,
+    scrollbar: true,
+  })
+
+```
+### 2.4注意
+1. BS 只针对其第一个子元素做滚动，所以一般在需要滚动的 content 外层包裹上一层 div.wrapper
+2. 实际滚动的 content 一定要大于 .wrapper
+3. 如果是横向滚动，那么 .wrapper 还需要设置 white-space:
+4.  click: true | tap: true
+   BS 默认会阻止浏览器的原生 click 事件，会导致在滚动的东西无法被 click，用该选项可以解决无法 click 的问题
+5. probeType: 3
+   当 probeType 为 1 的时候，会非实时触发 scroll 事件；
+6.引入Scroll组件时，必须指定其高度，这也是better-scroll框架的特点之一。
+       
+ ### 3首页控制栏的吸顶效果
+ 使用this.scroll.on('scroll', position => {})BS中的API方法监听滚动位置（position）,且计算控制栏的offsettop值，
+将offsettop和position相比较，来决定是否要吸顶，同时为了在实现吸顶时有更好的过渡效果，在首页页面上使用了两个tabContro组件

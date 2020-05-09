@@ -1,0 +1,36 @@
+
+### 1. 格式化日期字符串
+
+    dateShow() {
+      let date = new Date(this.comment.created * 1000);
+      let dateY = date.getFullYear().toString();
+      let dateM = date.getMonth() + 1;
+      let dateD = date.getDate();
+      dateM = dateM < 10 ? `0${dateM}` : `${dateM}`;
+      dateD = dateD < 10 ? `0${dateD}` : `${dateD}`;
+      return dateY + "-" + dateM + "-" + dateD;
+    }
+
+### 2. 修改配置，新增别名【注】在 DOM 中使用别名，需要加~
+
+- 新增 vue.config.js 文件，module.exports = { configureWebpack: { ... } }
+
+```
+  module.exports = {
+    configureWebpack: {
+      resolve: {
+        alias: {
+          assets: "@/assets",
+          common: "@/common",
+          components: "@/components",
+          network: "@/network",
+          views: "@views"
+          /* 由于router和store只在main.js里引用，且其他地方只需要 this.$router就可以，所以不需要 */
+        }
+      }
+    }
+  };
+```
+###3 使用mixin进行功能复用
+比如说在首页和详情页中我们都用到了回到顶部和监听图片加载完成实现防抖刷新功能，
+此时我们可以将这些事件方法抽离到一个单独的js文件中，这样就可以在不同的场景去调用它，实现代码的复用性。
